@@ -67,43 +67,8 @@ cat <<EOF > /usr/local/etc/xray/config.json
                 "enabled": true,
                 "destOverride": [
                     "http",
-                    "tls",
-                    "quic"
+                    "tls"
                 ]
-            }
-        },
-        {
-            "port": 443,
-            "protocol": "vless",
-            "tag": "vless_ws",
-            "settings": {
-                "clients": [
-                    {
-                        "id": "$UUID",
-                        "email": "user1@myserver",
-                        "flow": "xtls-rprx-vision"
-                    }
-                ],
-                "decryption": "none"
-            },
-            "streamSettings": {
-                "network": "ws",
-                "security": "reality",
-                "realitySettings": {
-                    "show": false,
-                    "dest": "www.microsoft.com:443",
-                    "xver": 0,
-                    "serverNames": [
-                        "www.microsoft.com"
-                    ],
-                    "privateKey": "$PRIVATE_KEY",
-                    "shortIds": [
-                        "$SHORT_ID"
-                    ]
-                },
-                "wsSettings": {
-                  "path": "/ws-path"
-                }
             }
         }
     ],
