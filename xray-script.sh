@@ -93,56 +93,11 @@ echo "Short ID: $SHORT_ID"
 echo "WebSocket Path: /ws-path"
 echo "============================="
 
-# Создание конфигурационного файла клиента
-cat <<EOF > /usr/local/etc/xray/client-config.json
-{
-    "log": {
-        "access": "",
-        "error": "",
-        "loglevel": "warning"
-    },
-    "inbounds": [
-        {
-            "port": 10801,
-            "listen": "127.0.0.1",
-            "protocol": "http",
-            "settings": {
-                "udp": true
-            }
-        }
-    ],
-    "outbounds": [
-        {
-            "protocol": "vless",
-            "settings": {
-                "vnext": [
-                    {
-                        "address": "$SERVER_IP",
-                        "port": 443,
-                        "users": [
-                            {
-                                "id": "$UUID",
-                                "flow": "xtls-rprx-vision",
-                                "encryption": "none"
-                            }
-                        ]
-                    }
-                ]
-            },
-            "streamSettings": {
-                "network": "tcp",
-                "security": "reality",
-                "realitySettings": {
-                    "serverName": "www.microsoft.com",
-                    "publicKey": "$PUBLIC_KEY",
-                    "shortId": "$SHORT_ID",
-                    "fingerprint": "chrome"
-                }
-            }
-        }
-    ]
-}
-EOF
+# Вывод информации для клиента в формате ссылки
+PORT=443
+echo "==== VLESS Link ===="
+echo "vless://$UUID@$SERVER_IP:$PORT?security=reality&sni=www.microsoft.com&fp=chrome&pbk=$PUBLIC_KEY&sid=$SHORT_ID&type=tcp&flow=xtls-rprx-vision&encryption=none#MY_VPS"
+echo "==================="
 
 # Запуск Xray
 systemctl restart xray
